@@ -1,0 +1,85 @@
+version: "3.9"
+volumes:
+  mysql_data:
+
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/frontend/build:/var/www/html/public/frontend
+      - ./src/backend/:/var/www/html/
+    depends_on:
+      - php
+      - app
+
+  # React
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    volumes:
+      - ./src/frontend:/app
+    command: npm start
+    ports:
+      - "3000:3000"
+    environment:
+      - APP_URL=${APP_URL:-http://localhost:3000}
+      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:8000/api}
+
+  # PHP
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src/backend:/var/www/html
+    ports:
+      - "8000:80"
+    environment:
+      - APP_ENV=${APP_ENV:-local}
+      - APP_URL=${APP_URL:-http://localhost:8000}
+      - DB_CONNECTION=${DB_CONNECTION:-mysql}
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=${DB_PORT:-3306}
+      - DB_DATABASE=${DB_DATABASE:-laravel}
+      - DB_USERNAME=${DB_USERNAME:-laravel_user}
+      - DB_PASSWORD=${DB_PASSWORD:-password}
+
+  mysql:
+    image: mysql:8.0
+    build:
+      context: ./docker/mysql
+      dockerfile: Dockerfile
+    volumes:
+      - type: volume
+        source: mysql_data
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    ports:
+      - "3306:3306"
+    environment:
+      - DB_CONNECTION=${DB_CONNECTION:-mysql}
+      - DB_HOST=${DB_HOST:-mysql}
+      - DB_PORT=${DB_PORT:-3306}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${DB_DATABASE:-laravel}
+      - MYSQL_USER=${DB_USERNAME:-laravel_user}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-password}
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=${DB_USERNAME:-laravel_user} # 環境変数を使用
+      - PMA_PASSWORD=${DB_PASSWORD:-password} # 環境変数を使用
+    depends_on:
+      - mysql
