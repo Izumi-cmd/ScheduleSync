@@ -1,0 +1,42 @@
+.create-event__form {
+  width: var(--form-width);
+  margin-inline: auto;
+  font-size: var(--font-size-base);
+}
+
+.create-event__form-group {
+  margin-block-start: 1rem;
+}
+
+.create-event__form-label {
+  display: block;
+  font-weight: 700;
+}
+
+.create-event__input {
+  padding: 0.5rem 1rem;
+  margin-block-start: 0.5rem;
+  width: 100%;
+  appearance: none;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+}
+
+/* @TODO: チェックボックスのラベルのデザインを作る */
+.create-event__form-label--checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.create-event__submit {
+  margin-block-start: 1rem;
+  display: block;
+  margin-inline: auto;
+}
+
+/* error */
+.create-event__error {
+  margin-block-start: 0.5rem;
+  color: var(--error-text-color);
+}
