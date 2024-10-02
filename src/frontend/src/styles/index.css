@@ -12,6 +12,8 @@ code {
 
 :root {
   --max-width: 1280px;
+  --container-width: 980px;
+  --form-width: 600px;
   --leading-trim: calc((1em - 1ch) / 2); /* 1文字分のスペースを調整 */
 
   /* Font */
@@ -22,6 +24,8 @@ code {
 
   /* color */
   --font-color: #4d4d4d;
+  --border-color: rgb(206, 206, 206);
+  --error-text-color: #dd003c;
 
   /* Chevron */
   --icon-chevron-up: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m4 16 8-8 8 8"/></svg>');
@@ -53,29 +57,6 @@ body {
   line-height: 1.5;
 }
 
-/* Button */
-.btn {
-  background-color: #e0e0e0;
-  border-radius: 50px;
-  box-shadow: inset 4px 4px 10px #bcbcbc, inset -4px -4px 10px #ffffff;
-  color: inherit;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 15px 40px;
-  transition: all 0.2s ease-in-out;
-  border: 2px solid rgb(206, 206, 206);
-}
-
-.btn:hover {
-  box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc,
-    -2px -2px 5px #ffffff;
-}
-
-.btn:focus {
-  outline: none;
-  box-shadow: inset 2px 2px 5px #bcbcbc, inset -2px -2px 5px #ffffff, 2px 2px 5px #bcbcbc,
-    -2px -2px 5px #ffffff;
-}
 /* Header */
 .header {
   display: grid;
@@ -93,9 +74,34 @@ body {
 .main {
   grid-area: main;
   padding-block: 2rem;
+  width: var(--container-width);
+  margin-inline: auto;
 }
 
-.home {
+.container {
+  display: grid;
+  grid:
+    "title" auto
+    "lead" auto
+    "actions" auto
+    / 1fr;
+  gap: 1rem;
+}
+
+.container__title {
+  grid-area: title;
+  font-size: var(--font-size-large);
+  font-weight: 600;
+}
+
+.container__lead {
+  grid-area: lead;
+  font-size: var(--font-size-base);
+  margin-block: 1rem;
+}
+
+.container__actions {
+  grid-area: actions;
 }
 
 .home__content-head {
@@ -103,12 +109,7 @@ body {
   gap: 1rem;
 }
 
-.home__content-head-title {
-  font-size: var(--font-size-large);
-  font-weight: 600;
-}
-
-.home__content-body {
+.home__actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10%;
