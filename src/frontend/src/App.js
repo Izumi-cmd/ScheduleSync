@@ -1,25 +1,29 @@
-// import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import { Home } from "./components/Home";
+import { Header } from "./components/layout/Header";
+import { Footer } from "./components/layout/Footer";
+import CreateEvent from "./components/CreateEvent";
+import JoinEvent from "./components/JoinEvent";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-event" element={<CreateEvent />} />
+          <Route path="/join-event" element={<JoinEvent />} />
+        </Routes>
+      </main>
+
+      <Footer />
     </div>
   );
 }
 
+// @todo: ルーティングエラー時の404ページを作成する
+// @todo: ローディング画面を作成する
 export default App;
