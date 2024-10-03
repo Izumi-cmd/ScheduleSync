@@ -1,11 +1,36 @@
+.create-event {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.create-event__title {
+  margin-bottom: 10px;
+}
+
 .create-event__form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   width: var(--form-width);
   margin-inline: auto;
   font-size: var(--font-size-base);
+  overflow: hidden;
 }
 
 .create-event__form-group {
-  margin-block-start: 1rem;
+  margin-block-start: 0.5rem;
+  margin-bottom: 10px;
+}
+
+.create-event__form-group:last-of-type {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .create-event__form-label {
@@ -14,29 +39,91 @@
 }
 
 .create-event__input {
-  padding: 0.5rem 1rem;
-  margin-block-start: 0.5rem;
+  padding: 0.3rem 0.5rem;
+  margin-block-start: 0.3rem;
   width: 100%;
   appearance: none;
   border: 1px solid var(--border-color);
   border-radius: 0.25rem;
 }
 
-/* @TODO: チェックボックスのラベルのデザインを作る */
 .create-event__form-label--checkbox {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
+.event-calendar {
+  flex-grow: 1;
+  min-height: 300px;
+  height: calc(100vh - 300px); /* 調整：他の要素の高さを考慮 */
+  overflow: auto;
+}
+
+.rbc-calendar {
+  height: 100% !important;
+}
+
 .create-event__submit {
-  margin-block-start: 1rem;
+  margin-block-start: 0.5rem;
   display: block;
   margin-inline: auto;
 }
 
-/* error */
 .create-event__error {
-  margin-block-start: 0.5rem;
+  margin-block-start: 0.3rem;
   color: var(--error-text-color);
+  font-size: 0.8em;
+}
+
+/* react-big-calendarのスタイル調整 */
+.rbc-time-view {
+  border: 1px solid #ddd;
+}
+
+.rbc-time-header-content {
+  font-weight: bold;
+}
+
+.rbc-header {
+  padding: 5px;
+  background-color: #f8f8f8;
+}
+
+.rbc-time-slot {
+  border-top: 1px solid #f0f0f0;
+}
+
+.rbc-event {
+  background-color: #3174ad;
+  color: white;
+}
+
+.rbc-today {
+  background-color: #fcf8e3;
+}
+
+.rbc-time-view {
+  font-size: 0.9em; /* カレンダー内のテキストサイズを少し小さく */
+}
+
+.rbc-timeslot-group {
+  min-height: 40px; /* タイムスロットの高さを調整 */
+}
+
+/* オプション：カレンダー内のスクロールバーのスタイリング */
+.event-calendar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.event-calendar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.event-calendar::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.event-calendar::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
